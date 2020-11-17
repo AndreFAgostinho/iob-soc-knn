@@ -19,7 +19,7 @@ $(foreach p, $(PERIPHERALS), $(eval include $(SUBMODULES_DIR)/$p/software/embedd
 HDR+=periphs.h
 
 #SOURCES
-SRC+= firmware.S
+SRC+= firmware.S firmware.c
 
 #RULES
 run: firmware.elf
@@ -36,7 +36,7 @@ periphs.h: periphs_tmp.h
 periphs_tmp.h:
 	$(foreach p, $(PERIPHERALS), $(shell echo "#define $p_BASE (1<<$P) |($p<<($P-N_SLAVES_W))" >> $@) )
 
-clean: gen-clean 
+clean: gen-clean
 	@rm -rf firmware.bin firmware.elf firmware.map *.hex ../periphs.h
 
 .PHONY: run clean subs periphs_tmp.h
